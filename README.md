@@ -19,7 +19,6 @@ Scrapy provides automagically other exporting formats, so you can do `scrapy cra
 * country
 * region (complexity >= 1)
 * city (complexity >= 1)
-* status (complexity >= 1)
 * formation_year (complexity >= 1)
 * lyrical_themes (complexity >= 1)
 
