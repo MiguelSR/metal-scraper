@@ -9,9 +9,11 @@ from metal_scraper.items import Band
 
 class SteelSpider(scrapy.Spider):
     name = "steelspider"
-    allowed_domains = ["metal-archives.com"]
+    allowed_domains = ["metal-archives.com", "metal-archives.local"]
     start_urls = (
-        'http://www.metal-archives.com/search/ajax-advanced/searching/bands/?',
+        # 'http://www.metal-archives.com/search/ajax-advanced/searching/bands/?',
+        # Test URL for debugging
+        'http://metal-archives.local/search.json',
     )
     fetched = 0
 
@@ -26,7 +28,6 @@ class SteelSpider(scrapy.Spider):
 
         for item in response_data['aaData']:
             band = Band()
-
             match = re.search('<a href=".*/(\d+)">(.*)<\/a>.*', item[0])
             band['name'] = match.group(2)
             band['metalarchives_id'] = match.group(1)
@@ -34,6 +35,10 @@ class SteelSpider(scrapy.Spider):
             band['style'] = item[1].strip()
 
             band['country'] = item[2].strip()
+
+            # Regex to extract the band URL from the <a> tag
+            url = re.search('href="([^"]*)', item[0])
+            band['url'] = url.group(1)
 
             if self.complexity > 0:
                 geo_info = item[3].split(',')
