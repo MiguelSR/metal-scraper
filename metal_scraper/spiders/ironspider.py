@@ -24,8 +24,9 @@ class IronSpider(scrapy.Spider):
 
             soup = BeautifulSoup(page, 'html.parser')
 
-            print(soup)
-
+            # Get the band logo
+            logodiv = soup.find("a", {"id": "logo"})
+            band['logo'] = logodiv['href']
 
 
     # gets a list of records to start crawling urls
