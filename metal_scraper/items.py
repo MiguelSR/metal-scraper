@@ -7,6 +7,7 @@
 
 import scrapy
 
+
 class Band(scrapy.Item):
     name = scrapy.Field()
     metalarchives_id = scrapy.Field()
@@ -18,3 +19,4 @@ class Band(scrapy.Item):
     formation_year = scrapy.Field()
     breakup_year = scrapy.Field()
     lyrical_themes = scrapy.Field()
+    url = scrapy.Field()
