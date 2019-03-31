@@ -1,40 +1,40 @@
 # -*- coding: utf-8 -*-
 import json
-import scrapy
+import logging
 
 import urllib
 from bs4 import BeautifulSoup
 
 from metal_scraper.items import Band
 
-
-class IronSpider(scrapy.Spider):
-    name = "ironspider"
-    allowed_domains = ["metal-archives.com", "metal-archives.local"]
-    start_urls = ()
-    fetched = 0
-
-    def __init__(self):
-        bands = self.getrecords()
-
-        for band in bands:
-            url = band['url']
-
-            page = urllib.request.urlopen(url)
-
-            soup = BeautifulSoup(page, 'html.parser')
-
-            # Get the band logo
-            logodiv = soup.find("a", {"id": "logo"})
-            band['logo'] = logodiv['href']
+log = logging.getLogger('ironspider')
+log.setLevel(logging.DEBUG)
 
 
-    # gets a list of records to start crawling urls
-    # should probably be refactored into a db process
-    def getrecords(self):
-        filename = 'items.json'
-        if filename:
-            with open(filename, 'r') as f:
-                bands = json.load(f)
+def run(path):
+    bands = get_records(path)
 
+    for band in bands:
+        url = band['url']
+
+        page = urllib.request.urlopen(url)
+
+        soup = BeautifulSoup(page, 'html.parser')
+
+        # Get the band logo
+        logo_div = soup.find("a", {"id": "logo"})
+        band['logo'] = logo_div['href']
+
+        print(f'band: {band}')
+
+
+
+
+# gets a list of records to start crawling urls
+# should probably be refactored into a db process
+def get_records(path):
+    if path:
+        with open(path, 'r') as f:
+            bands = json.load(f)
         return bands
+    # raise error
