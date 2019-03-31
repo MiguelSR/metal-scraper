@@ -17,8 +17,8 @@ class SteelSpider(scrapy.Spider):
     """
     name = "steelspider"
     if LOCALHOST:
-        allowed_domains = ["../test_data/search.json"]
-        start_urls = 'http://www.metal-archives.com/search/ajax-advanced/searching/bands/?'
+        allowed_domains = ["localhost"]
+        start_urls = ['http://localhost:8000/metal_scraper/test_data/search.json']
     else:
         allowed_domains = ["metal-archives.com", "metal-archives.local"]
         start_urls = (
@@ -41,22 +41,9 @@ class SteelSpider(scrapy.Spider):
             band['name'] = match.group(2)
             band['metalarchives_id'] = match.group(1)
 
-            band['style'] = item[1].strip()
-
-            band['country'] = item[2].strip()
-
             # Regex to extract the band URL from the <a> tag
             url = re.search('href="([^"]*)', item[0])
             band['url'] = url.group(1)
-
-            if self.complexity > 0:
-                geo_info = item[3].split(',')
-                band['city'] = geo_info[0].strip()
-                if len(geo_info) > 1:
-                    band['region'] = geo_info[1].strip()
-
-                band['lyrical_themes'] = item[4].strip()
-                band['formation_year'] =  "01/01/" + item[5].strip()
 
             self.fetched += 1
             yield band

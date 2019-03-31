@@ -35,5 +35,14 @@ Scrapy provides automagically other exporting formats, so you can do `scrapy cra
 ## Quick Start
 
 1. run `pipenv install`, this will install all the necessary packages. 
-2. run `pipenv run scrapy crawl scrapy crawl <spider> -o items.jso` 
+2. run `pipenv run scrapy crawl scrapy crawl <spider> -o items.json` 
+
+### Local Testing and Development
+1. run `python -m http.server 8000` to start a simple dev server
+2. run the commands as you would for production, setting LOCALHOST to true.
+
+## TODOs:
+- [ ] figure out a way to do this with env vars
+- [ ] host this somewhere where I can have the output of the scrapers dumped into a bucket
+- [ ] LICENSE
 
