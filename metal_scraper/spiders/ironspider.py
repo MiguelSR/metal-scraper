@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+import re
 
 import urllib
 from bs4 import BeautifulSoup
@@ -26,11 +27,19 @@ def run(path):
         band['logo'] = logo_div['href']
 
         # Band stats:
-        stats_keys = soup.find_all("dt")
-        
-        stats_values = soup.find_all("dd")
+        dts = soup.find_all("dt")
+        stats_keys = []
+        for key in dts:
+            stats_keys.append(key.get_text().lower().replace(" ", "_"))
+        print(f"stats_keys: {stats_keys}")
+        dds = soup.find_all("dd")
+        stats_values = []
+        for value in dds:
+            stats_values.append(value.get_text().lower())
         band_stats = dict(zip(stats_keys, stats_values))
-        band["stats"] = band_stats
+        # m-a sucks, let's do some formatting here before adding the stat block to the stupid fucking 
+        # shitty dictionary
+        band.update(band_stats)
 
         print(f'band: {band}')
 
