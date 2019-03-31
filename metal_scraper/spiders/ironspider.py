@@ -25,6 +25,13 @@ def run(path):
         logo_div = soup.find("a", {"id": "logo"})
         band['logo'] = logo_div['href']
 
+        # Band stats:
+        stats_keys = soup.find_all("dt")
+        
+        stats_values = soup.find_all("dd")
+        band_stats = dict(zip(stats_keys, stats_values))
+        band["stats"] = band_stats
+
         print(f'band: {band}')
 
 

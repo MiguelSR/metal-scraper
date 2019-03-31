@@ -19,12 +19,7 @@ Scrapy provides automagically other exporting formats, so you can do `scrapy cra
 
 * name
 * metalarchives_id
-* style
-* country
-* region (complexity >= 1)
-* city (complexity >= 1)
-* formation_year (complexity >= 1)
-* lyrical_themes (complexity >= 1)
+* url
 
 ## Requirements:
 
@@ -45,4 +40,5 @@ Scrapy provides automagically other exporting formats, so you can do `scrapy cra
 - [ ] figure out a way to do this with env vars
 - [ ] host this somewhere where I can have the output of the scrapers dumped into a bucket
 - [ ] LICENSE
+- [ ] CLI for quickstart, use @itdaniher's thing
 
