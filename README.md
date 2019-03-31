@@ -1,5 +1,9 @@
 # Metal Scraper
 
+Forked from @MiguelSR.
+
+This now scrapes the entirety of Metal-Archives.
+
 ## Description
 
 This is a simple scraper made with Scrapy to get information about Metal bands (scraping data from metal-archives.com).
