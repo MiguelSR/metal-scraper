@@ -30,3 +30,10 @@ Scrapy provides automagically other exporting formats, so you can do `scrapy cra
 
 * Python
 * Scrapy
+* Pipenv
+
+## Quick Start
+
+1. run `pipenv install`, this will install all the necessary packages. 
+2. run `pipenv run scrapy crawl scrapy crawl <spider> -o items.jso` 
+
