@@ -18,6 +18,7 @@ LOCALHOST = True
 def run(path):
     bands = get_bandlist(path)
 
+    band_list = []
     for band in bands:
         url = band['url']
 
@@ -31,6 +32,8 @@ def run(path):
         band["albums"] = get_complete_discography(band["metalarchives_id"])
         band["related_artists"] = get_related_artist_ma_ids(band["metalarchives_id"])
         #print(f'band: {band}')
+        band_list.append(band)
+    save_band_list(band_list)
 
 # gets a list of records to start crawling urls
 # should probably be refactored into a db process
@@ -117,3 +120,7 @@ def get_related_artist_ma_ids(band_id):
     for link in links:
         related_ids.append(link["href"].split("/")[-1])
     return related_ids
+
+def save_band_list(band_list):
+    with open("../metal-scraper/metal_scraper/data/bands.json", "w+") as f: # test path for now
+        json.dump(band_list, f, indent=4)

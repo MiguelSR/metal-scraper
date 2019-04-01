@@ -1,0 +1,60 @@
+[
+    {
+        "name": "$lutrot",
+        "metalarchives_id": "3540438154",
+        "url": "http://localhost:8000/metal_scraper/test_data/test_band.html",
+        "logo": "https://www.metal-archives.com/images/3/5/4/0/3540438154_logo.jpg?0936",
+        "country_of_origin": "united states",
+        "location": "nevada / north carolina / texas",
+        "status": "split-up",
+        "formed_in": "2013",
+        "genre": "brutal death metal",
+        "lyrical_themes": "n/a",
+        "last_label": "pathologically explicit recordings",
+        "years_active": "2013-2015,                          2017-2019",
+        "albums": [
+            {
+                "name": "Tiefenrausch (Ein Abstieg in f\u00fcnf Stufen)",
+                "url": "https://www.metal-archives.com/albums/Trist/Tiefenrausch_%28Ein_Abstieg_in_f%C3%BCnf_Stufen%29/111580",
+                "album_id": "111580",
+                "type": "Full-length",
+                "year": "2005"
+            },
+            {
+                "name": "Hin-fort",
+                "url": "https://www.metal-archives.com/albums/Trist/Hin-fort/152975",
+                "album_id": "152975",
+                "type": "Full-length",
+                "year": "2007",
+                "review": {
+                    "percent_and_count": "3 (77%)",
+                    "url": "https://www.metal-archives.com/reviews/Trist/Hin-fort/152975/"
+                }
+            },
+            {
+                "name": "Initiation",
+                "url": "https://www.metal-archives.com/albums/Trist/Initiation/199180",
+                "album_id": "199180",
+                "type": "Compilation",
+                "year": "2008"
+            },
+            {
+                "name": "Willenskraft",
+                "url": "https://www.metal-archives.com/albums/Trist/Willenskraft/228095",
+                "album_id": "228095",
+                "type": "Full-length",
+                "year": "2009",
+                "review": {
+                    "percent_and_count": "1 (50%)",
+                    "url": "https://www.metal-archives.com/reviews/Trist/Willenskraft/228095/"
+                }
+            }
+        ],
+        "related_artists": [
+            "3540378712",
+            "15884",
+            "3540368208",
+            "3540300711"
+        ]
+    }
+]
