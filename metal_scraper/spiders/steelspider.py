@@ -3,6 +3,7 @@ import json
 import re
 import os
 import scrapy
+import time
 
 from metal_scraper.items import Band
 
@@ -29,7 +30,7 @@ class SteelSpider(scrapy.Spider):
     def __init__(self, complexity=0):
         self.complexity = int(complexity)
         if self.complexity > 0:
-            self.start_urls = (self.start_urls[0] + "yearCreationFrom=0&yearCreationTo=9999&themes=*&location=*",)
+            self.start_urls = (self.start_urls[0] + "?bandName=*",)
 
     def parse(self, response):
         response_data = json.loads(response.body)
@@ -51,4 +52,5 @@ class SteelSpider(scrapy.Spider):
         if self.fetched < total_records:
             url = self.start_urls[0] + '&iDisplayStart=%s' % self.fetched
             yield scrapy.Request(url, callback=self.parse)
+            time.sleep(5)
         yield
