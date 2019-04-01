@@ -117,5 +117,3 @@ def get_related_artist_ma_ids(band_id):
     for link in links:
         related_ids.append(link["href"].split("/")[-1])
     return related_ids
-
-
