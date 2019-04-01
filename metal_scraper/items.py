@@ -12,3 +12,8 @@ class Band(scrapy.Item):
     name = scrapy.Field()
     metalarchives_id = scrapy.Field()
     url = scrapy.Field()
+
+class BandDetails(Band):
+    logo_url = scrapy.Field()
+    stats = scrapy.Field()
+
