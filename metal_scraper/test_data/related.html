@@ -1,0 +1,56 @@
+
+<script type="text/javascript" src="https://www.metal-archives.com/js/jquery/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+
+// Prepare band recommendation dialog
+$(document).ready(function() {
+	$(".no-js").removeClass("no-js");
+	$('#similarBandSelection').dialog({ autoOpen: false, width: 600, height: 500, modal: true, overlay: { opacity: 0.5, background: 'white'} });
+	$('#bandSearch').ajaxForm({ target: '#bandSearchResults', beforeSubmit: toggleLoading, success: toggleLoading});
+});
+
+</script>
+
+<div id="band_simartists">
+	<div class="tool_strip top right writeAction">
+			</div>
+</div>
+
+<div class="ui-tabs-panel-content block_spacer_top_36">
+	<table id="artist_list" class="display" cellpadding="0" cellspacing="0">
+		<thead>
+			<tr>
+								<th>Name</th>
+				<th width="82">Country</th>
+				<th>Genre</th>
+				<th>Score</th>
+			</tr>
+		</thead>
+		<tbody>
+		    		    	<tr id="recRow_3540378712">
+		    							<td><a href="https://www.metal-archives.com/bands/Gutrectomy/3540378712">Gutrectomy</a></td>
+					<td>Germany</td>
+					<td>Brutal Death Metal, Hardcore</td>
+					<td><span id="score_3540378712">3 </span></td>
+				</tr>
+					    	<tr id="recRow_15884">
+		    							<td><a href="https://www.metal-archives.com/bands/Gutrot/15884">Gutrot</a></td>
+					<td>United States</td>
+					<td>Brutal Death Metal/Grindcore</td>
+					<td><span id="score_15884">3 </span></td>
+				</tr>
+					    	<tr id="recRow_3540368208">
+		    							<td><a href="https://www.metal-archives.com/bands/Nephrectomy/3540368208">Nephrectomy</a></td>
+					<td>United States</td>
+					<td>Brutal Death Metal</td>
+					<td><span id="score_3540368208">3 </span></td>
+				</tr>
+					    	<tr id="recRow_3540300711">
+		    							<td><a href="https://www.metal-archives.com/bands/Turbidity/3540300711">Turbidity</a></td>
+					<td>Indonesia</td>
+					<td>Brutal Death Metal</td>
+					<td><span id="score_3540300711">3 </span></td>
+				</tr>
+								</tbody>
+	</table>
+	</div>
