@@ -41,4 +41,5 @@ Scrapy provides automagically other exporting formats, so you can do `scrapy cra
 - [ ] host this somewhere where I can have the output of the scrapers dumped into a bucket
 - [ ] LICENSE
 - [ ] CLI for quickstart, use @itdaniher's thing
+- [ ] include complete line up -- stretch goal
 
