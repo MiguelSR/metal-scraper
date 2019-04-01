@@ -11,6 +11,8 @@ from metal_scraper.items import Band
 log = logging.getLogger('ironspider')
 log.setLevel(logging.DEBUG)
 
+#TODO: BAND MEMBERS, PAST AND CURRENT
+
 LOCALHOST = True
 
 def run(path):
@@ -27,7 +29,8 @@ def run(path):
         band['logo'] = logo_div['href']
         band.update(get_band_stats(soup))
         band["albums"] = get_complete_discography(band["metalarchives_id"])
-        print(f'band: {band}')
+        band["related_artists"] = get_related_artist_ma_ids(band["metalarchives_id"])
+        #print(f'band: {band}')
 
 # gets a list of records to start crawling urls
 # should probably be refactored into a db process
@@ -97,3 +100,22 @@ def get_complete_discography(band_id):
         if album:
             albums.append(album)
     return(albums)
+
+def get_related_artist_ma_ids(band_id):
+    """
+    returns related artists
+    https://www.metal-archives.com/band/ajax-recommendations/id/{ma_id}
+    """
+    url = "https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}"
+    if LOCALHOST:
+        url = "http://localhost:8000/metal_scraper/test_data/related.html"
+    
+    page = urllib.request.urlopen(url)
+    soup = BeautifulSoup(page, 'html.parser')
+    links = soup.find("tbody").findAll("a")
+    related_ids = []
+    for link in links:
+        related_ids.append(link["href"].split("/")[-1])
+    return related_ids
+
+
