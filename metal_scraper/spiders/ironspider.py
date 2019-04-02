@@ -99,14 +99,16 @@ def get_related_artist_ma_ids(band_id):
     returns related artists
     https://www.metal-archives.com/band/ajax-recommendations/id/{ma_id}
     """
-    url = f"https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}"
+    url = f"https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}?showMoreSimilar=1#Similar_artists"
     print(f'url: {url}')
     page = urllib.request.urlopen(url, context=context)
     soup = BeautifulSoup(page, 'html.parser')
     links = soup.find("tbody").findAll("a")
     related_ids = []
     for link in links:
-        related_ids.append(link["href"].split("/")[-1])
+        print(f'link: {link}')
+        if not "#" in link["href"]:
+            related_ids.append(link["href"].split("/")[-1])
     return related_ids
 
 def save_band_list(band_list):

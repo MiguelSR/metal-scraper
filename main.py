@@ -4,7 +4,6 @@ from scrapy.utils.project import get_project_settings
 
 from scrapy.signalmanager import dispatcher
 from metal_scraper.spiders.steelspider import SteelSpider
-from metal_scraper.spiders.carbonspider import CarbonSpider
 from metal_scraper.spiders.ironspider import run
 
 def spider_results(spider):
