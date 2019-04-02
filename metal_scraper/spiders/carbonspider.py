@@ -13,6 +13,8 @@ class CarbonSpider(scrapy.Spider):
     scraping metal archives. It runs after SteelSpider returns
     a list bands, individually scraping each page.
     TODO: member parsing for past and current line-ups
+    TODO: set up pipelines to download logo
+    TODO: store all this shit in an s3 bucket
     """
     name = "carbonspider"
 
