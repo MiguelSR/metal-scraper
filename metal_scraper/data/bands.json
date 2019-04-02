@@ -1,60 +1,179 @@
 [
     {
-        "name": "$lutrot",
-        "metalarchives_id": "3540438154",
-        "url": "http://localhost:8000/metal_scraper/test_data/test_band.html",
-        "logo": "https://www.metal-archives.com/images/3/5/4/0/3540438154_logo.jpg?0936",
-        "country_of_origin": "united states",
-        "location": "nevada / north carolina / texas",
-        "status": "split-up",
-        "formed_in": "2013",
-        "genre": "brutal death metal",
-        "lyrical_themes": "n/a",
-        "last_label": "pathologically explicit recordings",
-        "years_active": "2013-2015,                          2017-2019",
+        "name": "!T.O.O.H.!",
+        "metalarchives_id": "16265",
+        "url": "https://www.metal-archives.com/bands/%21T.O.O.H.%21/16265",
+        "logo_url": "https://www.metal-archives.com/images/1/6/2/6/16265_logo.jpg",
+        "stats": {
+            "country_of_origin": "czech republic",
+            "location": "prague",
+            "status": "active",
+            "formed_in": "1993",
+            "genre": "progressive death metal/grindcore",
+            "lyrical_themes": "politics, misanthropy, gore",
+            "current_label": "unsigned/independent",
+            "years_active": "1990-1993              (as devastator),                          1993-2005,                          2011-2013,                          2017-present"
+        },
         "albums": [
             {
-                "name": "Tiefenrausch (Ein Abstieg in f\u00fcnf Stufen)",
-                "url": "https://www.metal-archives.com/albums/Trist/Tiefenrausch_%28Ein_Abstieg_in_f%C3%BCnf_Stufen%29/111580",
-                "album_id": "111580",
-                "type": "Full-length",
-                "year": "2005"
+                "name": "Vy kusy mrdac\u00edho masa",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Vy_kusy_mrdac%C3%ADho_masa/65241",
+                "album_id": "65241",
+                "type": "Demo",
+                "year": "1995"
             },
             {
-                "name": "Hin-fort",
-                "url": "https://www.metal-archives.com/albums/Trist/Hin-fort/152975",
-                "album_id": "152975",
+                "name": "Sen to nen\u00ed, nesm\u00ed",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Sen_to_nen%C3%AD%2C_nesm%C3%AD/499640",
+                "album_id": "499640",
+                "type": "Demo",
+                "year": "1997"
+            },
+            {
+                "name": "Live in Prosek",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Live_in_Prosek/318272",
+                "album_id": "318272",
+                "type": "Demo",
+                "year": "1998"
+            },
+            {
+                "name": "From Higher Will",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/From_Higher_Will/413438",
+                "album_id": "413438",
                 "type": "Full-length",
-                "year": "2007",
+                "year": "2000",
                 "review": {
-                    "percent_and_count": "3 (77%)",
-                    "url": "https://www.metal-archives.com/reviews/Trist/Hin-fort/152975/"
+                    "percent_and_count": "3 (81%)",
+                    "url": "https://www.metal-archives.com/reviews/%21T.O.O.H.%21/From_Higher_Will/413438/"
                 }
             },
             {
-                "name": "Initiation",
-                "url": "https://www.metal-archives.com/albums/Trist/Initiation/199180",
-                "album_id": "199180",
-                "type": "Compilation",
-                "year": "2008"
+                "name": "Z vy\u0161\u0161\u00ed v\u016fle",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Z_vy%C5%A1%C5%A1%C3%AD_v%C5%AFle/37044",
+                "album_id": "37044",
+                "type": "Full-length",
+                "year": "2000",
+                "review": {
+                    "percent_and_count": "3 (81%)",
+                    "url": "https://www.metal-archives.com/reviews/%21T.O.O.H.%21/Z_vy%C5%A1%C5%A1%C3%AD_v%C5%AFle/37044/"
+                }
             },
             {
-                "name": "Willenskraft",
-                "url": "https://www.metal-archives.com/albums/Trist/Willenskraft/228095",
-                "album_id": "228095",
+                "name": "Pod vl\u00e1dou bi\u010de",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Pod_vl%C3%A1dou_bi%C4%8De/37045",
+                "album_id": "37045",
                 "type": "Full-length",
-                "year": "2009",
+                "year": "2003",
                 "review": {
-                    "percent_and_count": "1 (50%)",
-                    "url": "https://www.metal-archives.com/reviews/Trist/Willenskraft/228095/"
+                    "percent_and_count": "2 (88%)",
+                    "url": "https://www.metal-archives.com/reviews/%21T.O.O.H.%21/Pod_vl%C3%A1dou_bi%C4%8De/37045/"
+                }
+            },
+            {
+                "name": "Order and Punishment",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Order_and_Punishment/82355",
+                "album_id": "82355",
+                "type": "Full-length",
+                "year": "2005",
+                "review": {
+                    "percent_and_count": "6 (79%)",
+                    "url": "https://www.metal-archives.com/reviews/%21T.O.O.H.%21/Order_and_Punishment/82355/"
+                }
+            },
+            {
+                "name": "Z ter\u00e1ria do kolumb\u00e1ria",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Z_ter%C3%A1ria_do_kolumb%C3%A1ria/499880",
+                "album_id": "499880",
+                "type": "EP",
+                "year": "2012"
+            },
+            {
+                "name": "Democratic Solution",
+                "url": "https://www.metal-archives.com/albums/%21T.O.O.H.%21/Democratic_Solution/384622",
+                "album_id": "384622",
+                "type": "Full-length",
+                "year": "2013",
+                "review": {
+                    "percent_and_count": "5 (57%)",
+                    "url": "https://www.metal-archives.com/reviews/%21T.O.O.H.%21/Democratic_Solution/384622/"
                 }
             }
         ],
-        "related_artists": [
-            "3540378712",
-            "15884",
-            "3540368208",
-            "3540300711"
+        "related_bands": [
+            "2884",
+            "1124",
+            "17",
+            "2978",
+            "98138",
+            "910",
+            "3043",
+            "6600",
+            "2179",
+            "2768",
+            "3540364920",
+            "250",
+            "2840",
+            "2863",
+            "34781",
+            "58553",
+            "3540324237",
+            "23195",
+            "99052",
+            "3540329551",
+            "16265?showMoreSimilar=1#Similar_artists"
+        ]
+    },
+    {
+        "name": "$ilverdollar",
+        "metalarchives_id": "60323",
+        "url": "https://www.metal-archives.com/bands/%24ilverdollar/60323",
+        "logo_url": "https://www.metal-archives.com/images/6/0/3/2/60323_logo.jpg?0327",
+        "stats": {
+            "country_of_origin": "sweden",
+            "location": "nyk\u00f6ping",
+            "status": "active",
+            "formed_in": "1996",
+            "genre": "heavy/power metal",
+            "lyrical_themes": "occult, fantasy, human issues",
+            "current_label": "massacre records",
+            "years_active": "1996-present"
+        },
+        "albums": [
+            {
+                "name": "Covers from Hell",
+                "url": "https://www.metal-archives.com/albums/%24ilverdollar/Covers_from_Hell/111141",
+                "album_id": "111141",
+                "type": "Full-length",
+                "year": "2002"
+            },
+            {
+                "name": "Pre-teaser",
+                "url": "https://www.metal-archives.com/albums/%24ilverdollar/Pre-teaser/111140",
+                "album_id": "111140",
+                "type": "EP",
+                "year": "2005"
+            },
+            {
+                "name": "Evil Never Sleeps",
+                "url": "https://www.metal-archives.com/albums/%24ilverdollar/Evil_Never_Sleeps/172482",
+                "album_id": "172482",
+                "type": "Full-length",
+                "year": "2007",
+                "review": {
+                    "percent_and_count": "2 (76%)",
+                    "url": "https://www.metal-archives.com/reviews/%24ilverdollar/Evil_Never_Sleeps/172482/"
+                }
+            },
+            {
+                "name": "Morte",
+                "url": "https://www.metal-archives.com/albums/%24ilverdollar/Morte/315349",
+                "album_id": "315349",
+                "type": "Full-length",
+                "year": "2011"
+            }
+        ],
+        "related_bands": [
+            "help#tab_similar"
         ]
     }
 ]

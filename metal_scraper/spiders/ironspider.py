@@ -2,55 +2,46 @@
 import json
 import logging
 import re
-
+import time
+from scrapy.utils.serialize import ScrapyJSONEncoder
 import urllib
 from bs4 import BeautifulSoup
-
-from metal_scraper.items import Band
 
 log = logging.getLogger('ironspider')
 log.setLevel(logging.DEBUG)
 
+import ssl
+
+# This restores the same behavior as before.
+context = ssl._create_unverified_context()
+
 #TODO: BAND MEMBERS, PAST AND CURRENT
 
-LOCALHOST = True
-
-def run(path):
-    bands = get_bandlist(path)
-
+def run(bands):
     band_list = []
     for band in bands:
+        print(f"band: {band}")
         url = band['url']
 
-        page = urllib.request.urlopen(url)
+        page = urllib.request.urlopen(url, context=context)
 
         soup = BeautifulSoup(page, 'html.parser')
         # Get the band logo
         logo_div = soup.find("a", {"id": "logo"})
-        band['logo'] = logo_div['href']
-        band.update(get_band_stats(soup))
+        band['logo_url'] = logo_div['href'] if logo_div else None
+        band["stats"]=get_band_stats(soup)
+        time.sleep(2)
         band["albums"] = get_complete_discography(band["metalarchives_id"])
-        band["related_artists"] = get_related_artist_ma_ids(band["metalarchives_id"])
-        #print(f'band: {band}')
+        band["related_bands"] = get_related_artist_ma_ids(band["metalarchives_id"])
         band_list.append(band)
     save_band_list(band_list)
 
-# gets a list of records to start crawling urls
-# should probably be refactored into a db process
-def get_bandlist(path):
-    """
-    returns list of bands urls to be crawled
-    """
-    if path:
-        with open(path, 'r') as f:
-            bands = json.load(f)
-        return bands
-    # raise error
 
 def get_band_stats(soup):
     """
     Returns all statistical information about a band.
     """
+    print(f'here')
     dts = soup.find_all("dt")
     stats_keys = []
     for key in dts:
@@ -69,10 +60,9 @@ def get_complete_discography(band_id):
     construction: ma/band/discography/id/<ma_id>/tab/all
     """
     # construct URL
-    url = f"https://wwww.metal-archives.com/band/discography/id/{band_id}/tab/all"
-    if LOCALHOST:
-        url = "http://localhost:8000/metal_scraper/test_data/disco.html"
-    page = urllib.request.urlopen(url)
+    url = f"https://www.metal-archives.com/band/discography/id/{band_id}/tab/all"
+    print(f'url: {url}')
+    page = urllib.request.urlopen(url, context=context)
     soup = BeautifulSoup(page, 'html.parser')
 
     rows = soup.find_all("tr")
@@ -109,11 +99,9 @@ def get_related_artist_ma_ids(band_id):
     returns related artists
     https://www.metal-archives.com/band/ajax-recommendations/id/{ma_id}
     """
-    url = "https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}"
-    if LOCALHOST:
-        url = "http://localhost:8000/metal_scraper/test_data/related.html"
-    
-    page = urllib.request.urlopen(url)
+    url = f"https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}"
+    print(f'url: {url}')
+    page = urllib.request.urlopen(url, context=context)
     soup = BeautifulSoup(page, 'html.parser')
     links = soup.find("tbody").findAll("a")
     related_ids = []
@@ -123,4 +111,4 @@ def get_related_artist_ma_ids(band_id):
 
 def save_band_list(band_list):
     with open("../metal-scraper/metal_scraper/data/bands.json", "w+") as f: # test path for now
-        json.dump(band_list, f, indent=4)
+        json.dump(band_list, f, indent=4, cls=ScrapyJSONEncoder)

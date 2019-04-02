@@ -12,24 +12,9 @@ class Band(scrapy.Item):
     name = scrapy.Field()
     metalarchives_id = scrapy.Field()
     url = scrapy.Field()
-
-class BandDetails(Band):
     logo_url = scrapy.Field()
     stats = scrapy.Field()
     albums = scrapy.Field()
     audit_trail = scrapy.Field()
-
-    def __init__(self, band):
-        self.metalarchives_id = band.metalarchives_id
-
-class RelatedBands(Band):
     related_bands = scrapy.Field()
-
-    def __init__(self, band):
-        self.metalarchives_id = band.metalarchives_id
-
-class Albums(Band):
     albums = scrapy.Field()
-
-    def __init__(self, band):
-        self.metalarchives_id = band.metalarchives_id

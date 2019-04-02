@@ -3,9 +3,7 @@ import re
 import os
 import scrapy
 
-from metal_scraper.items import BandDetails, Band
-
-LOCALHOST = True
+from metal_scraper.items import Band
 
 class CarbonSpider(scrapy.Spider):
     """
@@ -18,12 +16,13 @@ class CarbonSpider(scrapy.Spider):
     """
     name = "carbonspider"
 
-    def __init__(self, band=None):
-        self.start_urls = [ band.url ]
+    def __init__(self, url):
+        self.start_urls = [ url ]
 
     def parse(self, response):
-        band_details = BandDetails(self.band)
-        band_details["logo_url"] = response.css("div.band_name_img a::attr(href)").get()
+        band = Band()
+        band["name"]
+        band["logo_url"] = response.css("div.band_name_img a::attr(href)").get()
 
         keys = response.css("div dl dt::text").getall()
         keys = [ key.lower().strip(":").replace(" ", "_") for key in keys ]
@@ -31,11 +30,11 @@ class CarbonSpider(scrapy.Spider):
         values = response.css("div dl dd::text").getall()
         values = [ value.lower().strip() for value in values ]
 
-        band_details["stats"] = dict(zip(keys, values))
+        band["stats"] = dict(zip(keys, values))
 
         audit_keys = ["added_on", "modified_on"]
         audit_values = response.css("#auditTrail td::text").getall()
         audit_values = [item.split("on:")[1].strip() for item in audit_values if "on:" in item]
-        band_details["audit_trail"] = dict(zip(audit_keys, audit_values))
+        band["audit_trail"] = dict(zip(audit_keys, audit_values))
 
-        yield band_details
+        yield band

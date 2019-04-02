@@ -39,6 +39,7 @@ class SteelSpider(scrapy.Spider):
         for item in response_data['aaData']:
             band = Band()
             match = re.search('<a href=".*/(\d+)">(.*)<\/a>.*', item[0])
+            print(match)
             band['name'] = match.group(2)
             band['metalarchives_id'] = match.group(1)
 
@@ -52,5 +53,4 @@ class SteelSpider(scrapy.Spider):
         if self.fetched < total_records:
             url = self.start_urls[0] + '&iDisplayStart=%s' % self.fetched
             yield scrapy.Request(url, callback=self.parse)
-            time.sleep(5)
         yield
