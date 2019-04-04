@@ -4,4 +4,6 @@
 venv/
 items.json
 test_data/
-data/
+metal_scraper/data/
+__pycache__/
+.DS*

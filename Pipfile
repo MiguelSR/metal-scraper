@@ -9,6 +9,7 @@ simplehttpserver = "*"
 [packages]
 beautifulsoup4 = "*"
 scrapy = "==1.6.0"
+yapf = "*"
 
 [requires]
 python_version = "3.7"
