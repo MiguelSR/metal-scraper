@@ -7,14 +7,17 @@
 
 import scrapy
 
+
 class Band(scrapy.Item):
     name = scrapy.Field()
     metalarchives_id = scrapy.Field()
-    style = scrapy.Field()
-    country = scrapy.Field()
-    region = scrapy.Field()
-    city = scrapy.Field()
-    status = scrapy.Field()
-    formation_year = scrapy.Field()
-    breakup_year = scrapy.Field()
-    lyrical_themes = scrapy.Field()
+    url = scrapy.Field()
+    logo_url = scrapy.Field()
+    photo_url = scrapy.Field()
+    band_comment = scrapy.Field()
+    stats = scrapy.Field()
+    albums = scrapy.Field()
+    audit_trail = scrapy.Field()
+    related_bands = scrapy.Field()
+    albums = scrapy.Field()
+    audit_trail = scrapy.Field()

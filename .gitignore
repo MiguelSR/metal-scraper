@@ -1,2 +1,9 @@
 *.swp
 *.pyc
+.idea/
+venv/
+items.json
+test_data/
+data/
+__pycache__/
+.DS*
