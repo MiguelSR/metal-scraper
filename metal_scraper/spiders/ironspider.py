@@ -29,7 +29,12 @@ def run(bands):
         # Get the band logo
         logo_div = soup.find("a", {"id": "logo"})
         band['logo_url'] = logo_div['href'] if logo_div else None
-        band["stats"]=get_band_stats(soup)
+        photo_div = soup.find("a", {"id": "photo"})
+        band["photo_url"] =  photo_div["href"] if photo_div else None
+        comment_div = soup.find("div", {"class": "band_comment"})
+        band["band_comment"] = comment_div.get_text() if comment_div else None
+        band["stats"] = get_band_stats(soup)
+        band["audit_trail"] = get_audit_trail(soup)
         time.sleep(2)
         band["albums"] = get_complete_discography(band["metalarchives_id"])
         band["related_bands"] = get_related_artist_ma_ids(band["metalarchives_id"])
@@ -41,7 +46,6 @@ def get_band_stats(soup):
     """
     Returns all statistical information about a band.
     """
-    print(f'here')
     dts = soup.find_all("dt")
     stats_keys = []
     for key in dts:
@@ -100,13 +104,11 @@ def get_related_artist_ma_ids(band_id):
     https://www.metal-archives.com/band/ajax-recommendations/id/{ma_id}
     """
     url = f"https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}?showMoreSimilar=1#Similar_artists"
-    print(f'url: {url}')
     page = urllib.request.urlopen(url, context=context)
     soup = BeautifulSoup(page, 'html.parser')
     links = soup.find("tbody").findAll("a")
     related_ids = []
     for link in links:
-        print(f'link: {link}')
         if not "#" in link["href"]:
             related_ids.append(link["href"].split("/")[-1])
     return related_ids
@@ -114,3 +116,28 @@ def get_related_artist_ma_ids(band_id):
 def save_band_list(band_list):
     with open("../metal-scraper/metal_scraper/data/bands.json", "w+") as f: # test path for now
         json.dump(band_list, f, indent=4, cls=ScrapyJSONEncoder)
+
+def get_audit_trail(soup):
+    audit_table_div = soup.find( "div", {"id": "auditTrail" })
+    usrs = audit_table_div.findAll("a")
+    users = []
+    for u in usrs:
+        user = {}
+        user["user"] = u.get_text()
+        user["profile"] = u["href"]
+        users.append(user)
+    dates_row = audit_table_div.findAll("tr")[1::1]
+    print(type(dates_row[0]))
+    ds = dates_row[0].findAll("td")
+    dates = []
+    for date in ds:
+        d = date.get_text().split(":")[1].strip()
+        dates.append(d)
+    
+    audit = {}
+    audit["added_by"] = users[0]
+    audit["added_on"] = dates[0]
+    audit["modified_by"] = users[1]
+    audit["modified_on"] = dates[1]
+    print(audit)
+    return audit 
