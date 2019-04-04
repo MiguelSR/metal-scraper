@@ -2,50 +2,45 @@
 import json
 import logging
 import re
-
+import time
+from scrapy.utils.serialize import ScrapyJSONEncoder
 import urllib
 from bs4 import BeautifulSoup
-
-from metal_scraper.items import Band
 
 log = logging.getLogger('ironspider')
 log.setLevel(logging.DEBUG)
 
+import ssl
+
+# This restores the same behavior as before.
+context = ssl._create_unverified_context()
+
 #TODO: BAND MEMBERS, PAST AND CURRENT
 
-LOCALHOST = True
-
-def run(path):
-    bands = get_bandlist(path)
-
+def run(bands):
     band_list = []
     for band in bands:
+        log.debug(f"band: {band}")
         url = band['url']
 
-        page = urllib.request.urlopen(url)
+        page = urllib.request.urlopen(url, context=context)
 
         soup = BeautifulSoup(page, 'html.parser')
         # Get the band logo
         logo_div = soup.find("a", {"id": "logo"})
-        band['logo'] = logo_div['href']
-        band.update(get_band_stats(soup))
+        band['logo_url'] = logo_div['href'] if logo_div else None
+        photo_div = soup.find("a", {"id": "photo"})
+        band["photo_url"] =  photo_div["href"] if photo_div else None
+        comment_div = soup.find("div", {"class": "band_comment"})
+        band["band_comment"] = comment_div.get_text() if comment_div else None
+        band["stats"] = get_band_stats(soup)
+        band["audit_trail"] = get_audit_trail(soup)
+        time.sleep(2)
         band["albums"] = get_complete_discography(band["metalarchives_id"])
-        band["related_artists"] = get_related_artist_ma_ids(band["metalarchives_id"])
-        #print(f'band: {band}')
+        band["related_bands"] = get_related_artist_ma_ids(band["metalarchives_id"])
         band_list.append(band)
     save_band_list(band_list)
 
-# gets a list of records to start crawling urls
-# should probably be refactored into a db process
-def get_bandlist(path):
-    """
-    returns list of bands urls to be crawled
-    """
-    if path:
-        with open(path, 'r') as f:
-            bands = json.load(f)
-        return bands
-    # raise error
 
 def get_band_stats(soup):
     """
@@ -69,10 +64,8 @@ def get_complete_discography(band_id):
     construction: ma/band/discography/id/<ma_id>/tab/all
     """
     # construct URL
-    url = f"https://wwww.metal-archives.com/band/discography/id/{band_id}/tab/all"
-    if LOCALHOST:
-        url = "http://localhost:8000/metal_scraper/test_data/disco.html"
-    page = urllib.request.urlopen(url)
+    url = f"https://www.metal-archives.com/band/discography/id/{band_id}/tab/all"
+    page = urllib.request.urlopen(url, context=context)
     soup = BeautifulSoup(page, 'html.parser')
 
     rows = soup.find_all("tr")
@@ -109,18 +102,39 @@ def get_related_artist_ma_ids(band_id):
     returns related artists
     https://www.metal-archives.com/band/ajax-recommendations/id/{ma_id}
     """
-    url = "https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}"
-    if LOCALHOST:
-        url = "http://localhost:8000/metal_scraper/test_data/related.html"
-    
-    page = urllib.request.urlopen(url)
+    url = f"https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}?showMoreSimilar=1#Similar_artists"
+    page = urllib.request.urlopen(url, context=context)
     soup = BeautifulSoup(page, 'html.parser')
     links = soup.find("tbody").findAll("a")
     related_ids = []
     for link in links:
-        related_ids.append(link["href"].split("/")[-1])
+        if not "#" in link["href"]:
+            related_ids.append(link["href"].split("/")[-1])
     return related_ids
 
 def save_band_list(band_list):
     with open("../metal-scraper/metal_scraper/data/bands.json", "w+") as f: # test path for now
-        json.dump(band_list, f, indent=4)
+        json.dump(band_list, f, indent=4, cls=ScrapyJSONEncoder)
+
+def get_audit_trail(soup):
+    audit_table_div = soup.find( "div", {"id": "auditTrail" })
+    usrs = audit_table_div.findAll("a")
+    users = []
+    for u in usrs:
+        user = {}
+        user["user"] = u.get_text()
+        user["profile"] = u["href"]
+        users.append(user)
+    dates_row = audit_table_div.findAll("tr")[1::1]
+    ds = dates_row[0].findAll("td")
+    dates = []
+    for date in ds:
+        d = date.get_text().split(":")[1].strip()
+        dates.append(d)
+    
+    audit = {}
+    audit["added_by"] = users[0]
+    audit["added_on"] = dates[0]
+    audit["modified_by"] = users[1]
+    audit["modified_on"] = dates[1]
+    return audit 

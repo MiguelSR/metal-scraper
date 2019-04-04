@@ -39,6 +39,7 @@ class SteelSpider(scrapy.Spider):
         for item in response_data['aaData']:
             band = Band()
             match = re.search('<a href=".*/(\d+)">(.*)<\/a>.*', item[0])
+            print(match)
             band['name'] = match.group(2)
             band['metalarchives_id'] = match.group(1)
 
