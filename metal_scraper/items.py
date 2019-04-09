@@ -21,3 +21,4 @@ class Band(scrapy.Item):
     related_bands = scrapy.Field()
     albums = scrapy.Field()
     audit_trail = scrapy.Field()
+    wayback_link = scrapy.Field()

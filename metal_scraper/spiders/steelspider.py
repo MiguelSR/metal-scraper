@@ -4,6 +4,7 @@ import re
 import os
 import scrapy
 import time
+import savepagenow
 
 from metal_scraper.items import Band
 
@@ -46,12 +47,10 @@ class SteelSpider(scrapy.Spider):
             # Regex to extract the band URL from the <a> tag
             url = re.search('href="([^"]*)', item[0])
             band['url'] = url.group(1)
-
-            self.fetched += 1
+            band["wayback_link"] = savepagenow.capture_or_cache(band['url'])
             yield band
 
         if self.fetched < total_records:
             url = self.start_urls[0] + '&iDisplayStart=%s' % self.fetched
             yield scrapy.Request(url, callback=self.parse)
-            time.sleep(2)
         yield

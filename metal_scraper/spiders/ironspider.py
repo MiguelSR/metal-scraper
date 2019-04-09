@@ -7,6 +7,7 @@ from scrapy.utils.serialize import ScrapyJSONEncoder
 import urllib
 from bs4 import BeautifulSoup
 import datetime
+import savepagenow
 
 log = logging.getLogger('ironspider')
 log.setLevel(logging.DEBUG)
@@ -122,7 +123,7 @@ def get_related_artist_ma_ids(band_id):
 
 def save_band_list(band_list):
     with open(
-            f"../metal-scraper/metal_scraper/data/{int(datetime.datetime.timestamp(datetime.datetime.now()) * 1000)}_bands.json",
+            f"data/{int(datetime.datetime.timestamp(datetime.datetime.now()) * 1000)}_bands.json",
             "w+") as f:  # test path for now, get in s3 stuff
         json.dump(band_list, f, cls=ScrapyJSONEncoder)
 
