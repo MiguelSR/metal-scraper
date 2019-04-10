@@ -6,5 +6,6 @@ items.json
 test_data/
 data/
 metal_scraper/data/
+data/
 __pycache__/
 .DS*
