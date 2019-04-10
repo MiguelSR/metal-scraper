@@ -16,7 +16,7 @@ def spider_results(spider):
 
     def crawler_results(signal, sender, item, response, spider):
         log.debug(f'len(results): {len(results)}')
-        if len(results) == 200:  #1 page of results 10 for testing
+        if len(results) == 50:  #1 page of results 10 for testing
             log.debug("dumping results")
             run(results)
             results.clear()

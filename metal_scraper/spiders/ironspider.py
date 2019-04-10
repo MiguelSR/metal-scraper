@@ -4,30 +4,53 @@ import logging
 import re
 import time
 from scrapy.utils.serialize import ScrapyJSONEncoder
-import urllib
+import urllib.request
 from bs4 import BeautifulSoup
 import datetime
-import savepagenow
+import random
 
 log = logging.getLogger('ironspider')
-log.setLevel(logging.DEBUG)
-
-import ssl
-
-# This restores the same behavior as before.
-context = ssl._create_unverified_context()
+log.setLevel(logging.INFO)
 
 #TODO: BAND MEMBERS, PAST AND CURRENT
+
+USER_AGENTS = user_agent_list = [
+    #Chrome
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 5.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+    #Firefox
+    'Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1)',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
+    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)',
+    'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
+    'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
+    'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
+    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0)',
+    'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)',
+    'Mozilla/5.0 (Windows NT 6.1; Win64; x64; Trident/7.0; rv:11.0) like Gecko',
+    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
+    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
+    'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
+]
 
 
 def run(bands):
     log.debug(f"bands to parse: {len(bands)}")
     band_list = []
     for band in bands:
-        log.debug(f"band: {band}")
         url = band['url']
-
-        page = urllib.request.urlopen(url, context=context)
+        request = urllib.request.Request(
+            url, headers={'User Agent': random.choice(USER_AGENTS)})
+        page = urllib.request.urlopen(request)
 
         soup = BeautifulSoup(page, 'html.parser')
         # Get the band logo
@@ -39,7 +62,6 @@ def run(bands):
         band["band_comment"] = comment_div.get_text() if comment_div else None
         band["stats"] = get_band_stats(soup)
         band["audit_trail"] = get_audit_trail(soup)
-        time.sleep(1)
         band["albums"] = get_complete_discography(band["metalarchives_id"])
         band["related_bands"] = get_related_artist_ma_ids(
             band["metalarchives_id"])
@@ -72,7 +94,9 @@ def get_complete_discography(band_id):
     """
     # construct URL
     url = f"https://www.metal-archives.com/band/discography/id/{band_id}/tab/all"
-    page = urllib.request.urlopen(url, context=context)
+    request = urllib.request.Request(
+        url, headers={'User Agent': random.choice(USER_AGENTS)})
+    page = urllib.request.urlopen(request)
     soup = BeautifulSoup(page, 'html.parser')
 
     rows = soup.find_all("tr")
@@ -85,9 +109,12 @@ def get_complete_discography(band_id):
             # python is really stupid for not having a switch...
             # set up name and url
             if idx == 0:
-                album["name"] = col.find("a").get_text()
-                album["url"] = col.find("a")["href"]
-                album["album_id"] = album["url"].split("/")[-1]
+                if col.find("a"):
+                    album["name"] = col.find("a").get_text()
+                    album["url"] = col.find("a")["href"]
+                    album["album_id"] = album["url"].split("/")[-1]
+                else:
+                    album = None
             elif idx == 1:
                 album["type"] = col.get_text().strip()
             elif idx == 2:
@@ -111,7 +138,9 @@ def get_related_artist_ma_ids(band_id):
     https://www.metal-archives.com/band/ajax-recommendations/id/{ma_id}
     """
     url = f"https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}?showMoreSimilar=1#Similar_artists"
-    page = urllib.request.urlopen(url, context=context)
+    request = urllib.request.Request(
+        url, headers={'User Agent': random.choice(USER_AGENTS)})
+    page = urllib.request.urlopen(request)
     soup = BeautifulSoup(page, 'html.parser')
     links = soup.find("tbody").findAll("a")
     related_ids = []
@@ -125,7 +154,7 @@ def save_band_list(band_list):
     with open(
             f"data/{int(datetime.datetime.timestamp(datetime.datetime.now()) * 1000)}_bands.json",
             "w+") as f:  # test path for now, get in s3 stuff
-        json.dump(band_list, f, cls=ScrapyJSONEncoder)
+        json.dump(band_list, f, cls=ScrapyJSONEncoder, indent=4)
 
 
 def get_audit_trail(soup):

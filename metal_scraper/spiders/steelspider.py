@@ -47,7 +47,9 @@ class SteelSpider(scrapy.Spider):
             # Regex to extract the band URL from the <a> tag
             url = re.search('href="([^"]*)', item[0])
             band['url'] = url.group(1)
-            band["wayback_link"] = savepagenow.capture_or_cache(band['url'])
+            band["wayback_link"] = savepagenow.capture_or_cache(
+                band['url'], force_utf8=True)[0]
+            self.fetched += 1
             yield band
 
         if self.fetched < total_records:

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b0d55b6d10ba1fae89a569ef004c0d064da62a2b107106eeda368c1e04abc3e7"
+            "sha256": "600d7574b499fbe5b132a7fc10e7e9eb2cb4a8552a75b1a5416273812425b96d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -253,12 +253,9 @@
             "version": "==2.21.0"
         },
         "savepagenow": {
-            "hashes": [
-                "sha256:445ace4f0c6fea4c74df26e4c91f7f5d04bffbc94e30d8593ff07f9b8b57e26b",
-                "sha256:553f21518b1aff933aeb00bad5cfc35a2060d7c9e12a6cfe22ae3dc9591cfd40"
-            ],
-            "index": "pypi",
-            "version": "==0.0.13"
+            "editable": true,
+            "git": "https://github.com/alikoneko/savepagenow.git",
+            "ref": "eb6b315baf1452c366b77f8a556c8e716771dc1b"
         },
         "scrapy": {
             "hashes": [

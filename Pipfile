@@ -7,7 +7,7 @@ verify_ssl = true
 beautifulsoup4 = "*"
 scrapy = "==1.6.0"
 yapf = "*"
-savepagenow = "*"
+savepagenow = {editable = true,git = "https://github.com/alikoneko/savepagenow.git",ref = "eb6b315baf1452c366b77f8a556c8e716771dc1b"}
 
 [requires]
 python_version = "3.7"
