@@ -48,9 +48,10 @@ def run(bands):
     band_list = []
     for band in bands:
         url = band['url']
-        request = urllib.request.Request(
-            url, headers={'User Agent': random.choice(USER_AGENTS)})
-        page = urllib.request.urlopen(request)
+        user_agent = random.choice(USER_AGENTS)
+        request = urllib.request.Request(url)
+        request.add_header('User-Agent', user_agent)
+        page = urllib.request.urlopen(request).read()
 
         soup = BeautifulSoup(page, 'html.parser')
         # Get the band logo
@@ -94,9 +95,10 @@ def get_complete_discography(band_id):
     """
     # construct URL
     url = f"https://www.metal-archives.com/band/discography/id/{band_id}/tab/all"
-    request = urllib.request.Request(
-        url, headers={'User Agent': random.choice(USER_AGENTS)})
-    page = urllib.request.urlopen(request)
+    user_agent = random.choice(USER_AGENTS)
+    request = urllib.request.Request(url)
+    request.add_header('User-Agent', user_agent)
+    page = urllib.request.urlopen(request).read()
     soup = BeautifulSoup(page, 'html.parser')
 
     rows = soup.find_all("tr")
@@ -138,8 +140,10 @@ def get_related_artist_ma_ids(band_id):
     https://www.metal-archives.com/band/ajax-recommendations/id/{ma_id}
     """
     url = f"https://www.metal-archives.com/band/ajax-recommendations/id/{band_id}?showMoreSimilar=1#Similar_artists"
-    request = urllib.request.Request(
-        url, headers={'User Agent': random.choice(USER_AGENTS)})
+    user_agent = random.choice(USER_AGENTS)
+    request = urllib.request.Request(url)
+    request.add_header('User-Agent', user_agent)
+    page = urllib.request.urlopen(request).read()
     page = urllib.request.urlopen(request)
     soup = BeautifulSoup(page, 'html.parser')
     links = soup.find("tbody").findAll("a")
