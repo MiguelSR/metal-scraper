@@ -14,7 +14,6 @@ BOT_NAME = 'metal_scraper'
 SPIDER_MODULES = ['metal_scraper.spiders']
 NEWSPIDER_MODULE = 'metal_scraper.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'metal_scraper (+http://www.yourdomain.com)'
 
@@ -24,13 +23,13 @@ NEWSPIDER_MODULE = 'metal_scraper.spiders'
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY=2
+DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
 #CONCURRENT_REQUESTS_PER_IP=16
 
 # Disable cookies (enabled by default)
-COOKIES_ENABLED=False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED=False
@@ -84,4 +83,4 @@ COOKIES_ENABLED=False
 #HTTPCACHE_IGNORE_HTTP_CODES=[]
 #HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-LOCALHOST = True
+LOCALHOST = False
