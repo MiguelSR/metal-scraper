@@ -5,7 +5,7 @@ verify_ssl = true
 
 [packages]
 beautifulsoup4 = "*"
-scrapy = "==1.6.0"
+scrapy = "==1.8.2"
 yapf = "*"
 savepagenow = {editable = true,git = "https://github.com/alikoneko/savepagenow.git",ref = "eb6b315baf1452c366b77f8a556c8e716771dc1b"}
 
